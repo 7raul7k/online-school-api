@@ -29,10 +29,12 @@ public class Enrolment {
     @Column(name = "id")
     private long id;
 
-    @OneToMany(mappedBy = "enrolment",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Student> student = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "student_id",
+            referencedColumnName = "id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "student_id_fk"))
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id",
@@ -40,4 +42,19 @@ public class Enrolment {
             nullable = false,
             foreignKey = @ForeignKey(name = "course_id_fk"))
     private Course course;
+
+    @Override
+    public String toString(){
+        return id+","+student+","+course;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        Enrolment enrolment = (Enrolment) obj;
+
+        if(enrolment.student.equals(this.student) && enrolment.course.equals(this.course)){
+            return true;
+        }
+        return false;
+    }
 }

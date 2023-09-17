@@ -1,11 +1,15 @@
 package ro.myclass.onlineschoolapi.student.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -65,8 +69,14 @@ public class Student {
     @JoinColumn(name = "enrolment_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "enrolment_student_fk"))
+                    name = "enrolment_id_fk"))
     private Enrolment enrolment;
+
+    @OneToMany(mappedBy = "student",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+
+    private List<Enrolment> enrolments = new ArrayList<>();
 
 
 
