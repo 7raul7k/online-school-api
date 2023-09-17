@@ -186,6 +186,6 @@ class StudentRepoTest {
         assertEquals(student, studentRepo.findStudentByFirstNameAndLastNameAndAge("Popescu", "Andrei", 12).get());
     }
 
-    
+
 }
 
