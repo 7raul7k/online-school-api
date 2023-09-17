@@ -23,4 +23,10 @@ public interface CourseDTO extends JpaRepository<Course,Long> {
     @Query("select c from Course c where c.professor.id = ?1")
     List<Course> getCoursesByProfessorId(long professorId);
 
+    @Query("select c from Course c where c.id = ?1")
+    List<Course> getCourseById(long id);
+
+    @Query("select c from Course c")
+    List<Course> getAllCourses();
+
 }
