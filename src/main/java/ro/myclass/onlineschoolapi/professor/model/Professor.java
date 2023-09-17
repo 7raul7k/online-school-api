@@ -1,4 +1,5 @@
-package ro.myclass.onlineschoolapi.student.model;
+package ro.myclass.onlineschoolapi.professor.model;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,21 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import static jakarta.persistence.GenerationType.SEQUENCE;
-
-@Table(name = "student_db")
-@Entity(name = "Student")
+@Table(name = "professor_db")
+@Entity(name = "Professor")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Student {
+public class Professor {
     @Id
-    @SequenceGenerator(name = "student_sequence",
-            sequenceName = "student_sequence",
+    @SequenceGenerator(name = "professor_sequence",
+            sequenceName = "professor_sequence",
             allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE,
-            generator = "student_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "professor_sequence")
     @Column(name = "id")
     private long id;
     @Column(name = "first_name",
@@ -43,26 +42,25 @@ public class Student {
             nullable = false,
             columnDefinition = "TEXT")
     private String adress;
+    @Column(name = "subject",
+            nullable = false,
+            columnDefinition = "TEXT")
+    private String subject;
 
     @Override
-    public String toString(){
-        return id+","+firstName+","+lastName+","+age+","+email+","+adress;
+    public String toString() {
+        return id + "," + firstName + "," + lastName + "," + age + "," + email + "," + adress + "," + subject;
     }
 
     @Override
     public boolean equals(Object obj){
-        Student student = (Student) obj;
+        Professor professor = (Professor) obj;
 
-        if(student.firstName.equals(this.firstName) && student.lastName.equals(this.lastName) && student.age == this.age && student.email.equals(this.email) && student.adress.equals(this.adress)){
+        if(professor.firstName.equals(this.firstName) && professor.lastName.equals(this.lastName) && professor.age == this.age && professor.email.equals(this.email) && professor.adress.equals(this.adress) && professor.subject.equals(this.subject)){
             return true;
         }
-            return false;
-
+        return false;
     }
-
-
-
-
 
 
 }
