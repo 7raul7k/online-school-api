@@ -28,13 +28,12 @@ public class StudentIdCard {
 
     @Column(name ="card_number",
             nullable = false,
-            columnDefinition = "TEXT")
-    private String cardNumber;
+            columnDefinition = "INT")
+    private int cardNumber;
 
     @ManyToOne
     @JoinColumn(name = "student_id",
             referencedColumnName = "id",
-            nullable = false,
             foreignKey = @ForeignKey(name = "student_id_fk"))
     private Student student;
 
