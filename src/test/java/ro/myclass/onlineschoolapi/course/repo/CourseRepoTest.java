@@ -78,5 +78,5 @@ class CourseRepoTest {
         assertEquals(course, courseRepo.getCourseById(course.getId()).get(0));
     }
 
-    
+
 }
