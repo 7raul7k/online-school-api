@@ -67,7 +67,9 @@ public class Professor {
         return false;
     }
 
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "professor",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonManagedReference(value = "test3")
      private List<Course> courseList = new ArrayList<>();
 

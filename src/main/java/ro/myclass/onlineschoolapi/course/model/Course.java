@@ -6,7 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.professor.model.Professor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "course_db")
 @Entity(name = "Course")
@@ -33,6 +37,14 @@ public class Course {
     private String department;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "professor_id",
+            referencedColumnName = "id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "professor_id_fk"))
     private Professor professor;
+
+    @OneToMany(mappedBy = "course",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Enrolment> enrolment = new ArrayList<>();
 }

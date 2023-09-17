@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -60,6 +61,12 @@ public class Student {
 
     }
 
+    @ManyToOne
+    @JoinColumn(name = "enrolment_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "enrolment_student_fk"))
+    private Enrolment enrolment;
 
 
 
