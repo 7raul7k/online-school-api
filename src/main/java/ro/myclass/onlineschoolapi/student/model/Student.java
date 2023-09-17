@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ro.myclass.onlineschoolapi.book.model.Book;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 
 import java.util.ArrayList;
@@ -79,7 +80,12 @@ public class Student {
     private List<Enrolment> enrolments = new ArrayList<>();
 
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="book_db_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "book_db_id_fk"))
+    private Book book;
 
 
 }

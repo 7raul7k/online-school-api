@@ -30,10 +30,10 @@ public class Enrolment {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id",
+    @JoinColumn(name = "student_db_id",
             referencedColumnName = "id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "student_id_fk"))
+            foreignKey = @ForeignKey(name = "student_db_id_fk"))
     private Student student;
 
     @ManyToOne
