@@ -20,6 +20,9 @@ public interface StudentIdCardRepo extends JpaRepository<StudentIdCard,Long> {
     @Query("select s from StudentIdCard s")
     List<StudentIdCard> getAllStudentIdCard();
 
+    @Query("select s from StudentIdCard s where s.cardNumber = ?1")
+    Optional<StudentIdCard> getStudentIdCardByCardNumber(int cardNumber);
+
 
 
 

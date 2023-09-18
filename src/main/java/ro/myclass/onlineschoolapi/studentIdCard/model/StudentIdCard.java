@@ -30,10 +30,8 @@ public class StudentIdCard {
             columnDefinition = "INT")
     private int cardNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "student_id_fk"))
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
 

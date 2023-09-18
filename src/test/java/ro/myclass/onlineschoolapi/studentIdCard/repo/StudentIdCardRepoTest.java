@@ -66,8 +66,8 @@ class StudentIdCardRepoTest {
         assertEquals(studentIdCardList, studentIdCardRepo.getAllStudentIdCard());
     }
 
-    @Test
-    public void getStudentIdCardByCardNumber() {
+   @Test
+    public void getStudentIdCardByIdTest() {
 
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
@@ -75,11 +75,7 @@ class StudentIdCardRepoTest {
 
         studentIdCardRepo.save(studentIdCard);
 
-
-        studentRepo.save(student);
-
-
-        assertEquals(studentIdCard, studentIdCardRepo.getStudentIdCardById(123).get());
+        assertEquals(studentIdCard, studentIdCardRepo.getStudentIdCardById(studentIdCard.getId()).get());
     }
 
     @Test
@@ -113,5 +109,15 @@ class StudentIdCardRepoTest {
         studentIdCardRepo.save(studentIdCard);
 
         assertEquals(studentIdCard,studentIdCardRepo.getStudentIdCardByStudentId(student.getId()).get());
+    }
+
+    @Test
+    public void getStudentIdCardByCardNumberTest(){
+
+        StudentIdCard studentIdCard = StudentIdCard.builder().cardNumber(123).build();
+
+        studentIdCardRepo.save(studentIdCard);
+
+        assertEquals(studentIdCard,studentIdCardRepo.getStudentIdCardByCardNumber("123").get());
     }
 }
