@@ -118,6 +118,8 @@ class StudentIdCardRepoTest {
 
         studentIdCardRepo.save(studentIdCard);
 
-        assertEquals(studentIdCard,studentIdCardRepo.getStudentIdCardByCardNumber("123").get());
+        assertEquals(studentIdCard,studentIdCardRepo.getStudentIdCardByCardNumber(123).get());
     }
+
+
 }
