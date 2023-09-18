@@ -21,7 +21,7 @@ public interface CourseRepo extends JpaRepository<Course,Long> {
     Optional<Course> getCourseByNameAndDepartment(String name, String department);
 
     @Query("select c from Course c where c.id = ?1")
-    List<Course> getCourseById(long id);
+    Optional<Course> getCourseById(long id);
 
     @Query("select c from Course c")
     List<Course> getAllCourses();

@@ -75,7 +75,7 @@ class CourseRepoTest {
     public void getCourseById() {
         Course course = Course.builder().name("Matematica").department("Matematica").build();
         courseRepo.save(course);
-        assertEquals(course, courseRepo.getCourseById(course.getId()).get(0));
+        assertEquals(course, courseRepo.getCourseById(course.getId()).get());
     }
 
 
