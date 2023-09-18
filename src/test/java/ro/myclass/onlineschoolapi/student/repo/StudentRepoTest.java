@@ -59,7 +59,7 @@ class StudentRepoTest {
 
         studentRepo.save(student);
 
-        assertEquals(student, studentRepo.getStudentById(student.getId()).get(0));
+        assertEquals(student, studentRepo.getStudentById(student.getId()).get());
 
     }
 
@@ -141,7 +141,7 @@ class StudentRepoTest {
 
         studentRepo.save(student);
 
-        assertEquals(student, studentRepo.findStudentsByEmail(student.getEmail()).get(0));
+        assertEquals(student, studentRepo.findStudentByEmail(student.getEmail()).get());
     }
 
     @Test
