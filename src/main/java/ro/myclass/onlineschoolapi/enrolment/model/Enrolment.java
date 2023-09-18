@@ -32,14 +32,12 @@ public class Enrolment {
     @ManyToOne
     @JoinColumn(name = "student_db_id",
             referencedColumnName = "id",
-            nullable = false,
             foreignKey = @ForeignKey(name = "student_db_id_fk"))
     private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id",
             referencedColumnName = "id",
-            nullable = false,
             foreignKey = @ForeignKey(name = "course_id_fk"))
     private Course course;
 

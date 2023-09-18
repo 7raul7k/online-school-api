@@ -39,7 +39,6 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "professor_id",
             referencedColumnName = "id",
-            nullable = false,
             foreignKey = @ForeignKey(name = "professor_id_fk"))
     private Professor professor;
 
@@ -47,4 +46,18 @@ public class Course {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Enrolment> enrolment = new ArrayList<>();
+
+    @Override
+    public String toString(){
+        return id+","+name+","+department;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        Course c = (Course) object;
+        if(c.name.equals(this.name)&&c.department.equals(this.department)){
+            return true;
+        }
+        return false;
+    }
 }

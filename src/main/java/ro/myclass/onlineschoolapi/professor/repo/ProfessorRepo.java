@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface ProfessorRepo  extends JpaRepository<Professor,Long> {
 
+    @Query("select p from Professor p")
+    List<Professor> getAllProfessor();
     @Query("select p from Professor p where p.firstName = ?1")
     List<Professor> getProfessorByFirstName(String firstName);
 
@@ -35,6 +37,9 @@ public interface ProfessorRepo  extends JpaRepository<Professor,Long> {
 
     @Query("select p from Professor p where p.firstName = ?1 and p.lastName = ?2 and p.age = ?3")
     Optional<Professor> getProfessorByFirstNameAndLastNameAndAge(String firstName, String lastName, int age);
+
+    @Query("select p from Professor p where p.id = ?1")
+    Optional<Professor> getProfessorById(long id);
 
 
 }

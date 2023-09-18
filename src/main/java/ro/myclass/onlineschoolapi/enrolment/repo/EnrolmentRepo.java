@@ -17,12 +17,10 @@ public interface EnrolmentRepo extends JpaRepository<Enrolment,Long> {
     @Query("select e from Enrolment e where e.course.id = ?1")
     List<Enrolment> getEnrolmentsByCourseId(long courseId);
 
-    @Query("select e from Enrolment e where e.student.id = ?1 and e.course.id = ?2")
-    Optional<Enrolment> getEnrolmentByStudentIdAndCourseId(long studentId, long courseId);
 
     @Query("select e from Enrolment e")
-    List<Enrolment> getAllEnrolments():
+    List<Enrolment> getAllEnrolments();
 
     @Query("select e from Enrolment e where e.id = ?1")
-    List<Enrolment> getEnrolmentById(long id);
+    Optional<Enrolment> getEnrolmentById(long id);
 }

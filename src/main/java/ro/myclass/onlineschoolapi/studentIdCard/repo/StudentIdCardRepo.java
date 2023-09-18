@@ -12,16 +12,15 @@ import java.util.Optional;
 public interface StudentIdCardRepo extends JpaRepository<StudentIdCard,Long> {
 
     @Query("select s from StudentIdCard s where s.id = ?1")
-    List<StudentIdCard> getStudentIdCardById(long id);
+    Optional<StudentIdCard> getStudentIdCardById(long id);
 
     @Query("select s from StudentIdCard s where s.student.id = ?1")
     Optional<StudentIdCard> getStudentIdCardByStudentId(long studentId);
 
     @Query("select s from StudentIdCard s")
-    List<StudentIdCard> getStudentIdCard();
+    List<StudentIdCard> getAllStudentIdCard();
 
-    @Query("select s from StudentIdCard s where s.student.id = ?1")
-    List<StudentIdCard> getStudentIdCardByStudentId(long studentId);
+
 
 
 

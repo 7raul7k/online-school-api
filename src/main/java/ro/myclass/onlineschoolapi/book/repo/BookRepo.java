@@ -18,5 +18,8 @@ public interface BookRepo extends JpaRepository<Book,Long> {
         Optional<Book> getBookByName(String name);
 
         @Query("select b from Book b where b.student = ?1")
-        List<Book> getBookByStudent(long studentId);
+        Optional<Book> getBookByStudent(long studentId);
+
+        @Query("select b from Book b")
+        List<Book> getAllBooks();
 }
