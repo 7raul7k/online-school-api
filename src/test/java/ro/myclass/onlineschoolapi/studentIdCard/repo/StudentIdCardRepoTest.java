@@ -104,7 +104,7 @@ class StudentIdCardRepoTest {
     }
 
     @Test
-    public void getStudentIdCardByStudentIdAndCardNumber() {
+    public void getStudentIdCardByStudent(){
 
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
@@ -112,5 +112,6 @@ class StudentIdCardRepoTest {
 
         studentIdCardRepo.save(studentIdCard);
 
+        assertEquals(studentIdCard,studentIdCardRepo.getStudentIdCardByStudentId(student.getId()).get());
     }
 }
