@@ -74,7 +74,7 @@ class StudentServiceTest {
 
     @Test
     public void getStudentByIdException() {
-        doReturn(java.util.Optional.empty()).when(studentRepo).getStudentById(1);
+        doReturn(Optional.empty()).when(studentRepo).getStudentById(1);
 
         assertThrows(StudentNotFoundException.class, () -> studentQuerryService.getStudentById(1));
     }
