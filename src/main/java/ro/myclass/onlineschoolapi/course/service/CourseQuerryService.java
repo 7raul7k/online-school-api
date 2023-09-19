@@ -9,7 +9,7 @@ import java.util.List;
 public interface CourseQuerryService  {
 
     List<Course> getAllCourses();
-    Course getCourseById(String name);
+    Course getCourseById(int id);
     Course getCourseByName(String name);
     Course getCourseByNameAndDepartment(String name, String department);
 

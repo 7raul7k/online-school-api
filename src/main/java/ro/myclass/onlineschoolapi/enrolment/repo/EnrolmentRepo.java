@@ -23,4 +23,8 @@ public interface EnrolmentRepo extends JpaRepository<Enrolment,Long> {
 
     @Query("select e from Enrolment e where e.id = ?1")
     Optional<Enrolment> getEnrolmentById(long id);
+
+
+    @Query("select e from Enrolment e where e.course.name = ?1 and e.student.firstName = ?2 and e.student.lastName = ?3")
+    Optional<Enrolment> getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(String courseName, String studentFirstName, String studentLastName);
 }

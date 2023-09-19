@@ -28,9 +28,11 @@ public class StudentCommandImplService implements StudentCommandService {
             Student student1 = Student.builder().firstName(studentDTO.getFirstName()).lastName(studentDTO.getLastName()).age(studentDTO.getAge()).email(studentDTO.getEmail()).adress(studentDTO.getAdress()).build();
 
             studentRepo.save(student1);
+        }else{
+            throw new StudentWasFoundException();
         }
 
-        throw new StudentWasFoundException();
+
 
     }
 

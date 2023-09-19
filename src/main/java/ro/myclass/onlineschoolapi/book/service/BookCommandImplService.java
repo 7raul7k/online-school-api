@@ -41,13 +41,17 @@ public class BookCommandImplService implements BookCommandService{
 
             Book book1 = Book.builder().bookName(bookDTO.getName()).student(student.get()).build();
             bookRepo.save(book1);
+        }else{
+            throw new BookNotFoundException();
         }
     }
 
     public void updateBook(BookDTO bookDTO) {
         Optional<Book> book = bookRepo.getBookByName(bookDTO.getName());
 
-        if(book.isPresent()){
+        if(book.isEmpty()) {
+            throw new BookNotFoundException();
+        }else{
             StudentDTO studentDTO = bookDTO.getStudent();
 
             Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());

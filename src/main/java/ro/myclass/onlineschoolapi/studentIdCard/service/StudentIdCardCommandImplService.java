@@ -3,7 +3,10 @@ package ro.myclass.onlineschoolapi.studentIdCard.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import ro.myclass.onlineschoolapi.exceptions.StudentIdCardNotFoundException;
+import ro.myclass.onlineschoolapi.exceptions.StudentIdCardWasFoundException;
 import ro.myclass.onlineschoolapi.exceptions.StudentNotFoundException;
+import ro.myclass.onlineschoolapi.exceptions.StudentWasFoundException;
 import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 import ro.myclass.onlineschoolapi.student.model.Student;
 import ro.myclass.onlineschoolapi.student.repo.StudentRepo;
@@ -34,23 +37,27 @@ public class StudentIdCardCommandImplService implements StudentIdCardCommandServ
             Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());
 
             if(student.isEmpty()){
-                throw new StudentNotFoundException();
+                throw new StudentIdCardWasFoundException();
             }
 
             StudentIdCard studentIdCard1 = StudentIdCard.builder().cardNumber(studentIdCardDTO.getCardNumber()).student(student.get()).build();
             studentIdCardRepo.save(studentIdCard1);
+        }else {
+            throw new StudentWasFoundException();
         }
     }
 
     public void updateStudentIdCard(StudentIdCardDTO studentIdCardDTO) {
         Optional<StudentIdCard> studentIdCard = studentIdCardRepo.getStudentIdCardByCardNumber(studentIdCardDTO.getCardNumber());
 
-        if(studentIdCard.isPresent()){
+        if(studentIdCard.isEmpty()){
+            throw new StudentIdCardNotFoundException();
+        }else {
             StudentDTO studentDTO = studentIdCardDTO.getStudent();
 
             Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());
 
-            if(student.isEmpty()){
+            if (student.isEmpty()) {
                 throw new StudentNotFoundException();
             }
 
@@ -62,7 +69,9 @@ public class StudentIdCardCommandImplService implements StudentIdCardCommandServ
     public void deleteStudentIdCard(int cardNumber) {
         Optional<StudentIdCard> studentIdCard = studentIdCardRepo.getStudentIdCardByCardNumber(cardNumber);
 
-        if(studentIdCard.isPresent()){
+        if(studentIdCard.isEmpty()){
+            throw new StudentNotFoundException();
+        }else{
             studentIdCardRepo.delete(studentIdCard.get());
         }
     }

@@ -9,6 +9,8 @@ import ro.myclass.onlineschoolapi.course.repo.CourseRepo;
 import ro.myclass.onlineschoolapi.enrolment.dto.EnrolmentDTO;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.enrolment.repo.EnrolmentRepo;
+import ro.myclass.onlineschoolapi.exceptions.CourseNotFoundException;
+import ro.myclass.onlineschoolapi.exceptions.EnrolmentNotFoundException;
 import ro.myclass.onlineschoolapi.exceptions.EnrolmentWasFoundException;
 import ro.myclass.onlineschoolapi.exceptions.StudentNotFoundException;
 import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
@@ -35,7 +37,7 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
 
     public void addEnrolment(EnrolmentDTO enrolmentDTO) {
 
-        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentById(enrolmentDTO.getId());
+        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(enrolmentDTO.getCourse().getName(), enrolmentDTO.getStudent().getFirstName(), enrolmentDTO.getStudent().getLastName());
 
         if(enrolment.isEmpty()){
             StudentDTO studentDTO = enrolmentDTO.getStudent();
@@ -48,7 +50,7 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
             Optional<Course> course = courseRepo.getCourseByName(courseDTO.getName());
 
             if(course.isEmpty()){
-                throw new StudentNotFoundException();
+                throw new CourseNotFoundException();
             }
 
             Enrolment enrolment1 = Enrolment.builder().student(student.get()).course(course.get()).build();
@@ -65,7 +67,7 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
         Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentById(id);
 
         if(enrolment.isEmpty()){
-            throw new StudentNotFoundException();
+            throw new EnrolmentNotFoundException();
         }else{
             enrolmentRepo.delete(enrolment.get());
         }
@@ -74,10 +76,10 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
 
     public void updateEnrolment(EnrolmentDTO enrolmentDTO){
 
-        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentById(enrolmentDTO.getId());
+        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(enrolmentDTO.getCourse().getName(), enrolmentDTO.getStudent().getFirstName(), enrolmentDTO.getStudent().getLastName());
 
         if(enrolment.isEmpty()) {
-            throw new StudentNotFoundException();
+            throw new EnrolmentNotFoundException();
         }else{
 
             if(enrolmentDTO.getStudent() != null){
@@ -94,13 +96,13 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
                 Optional<Course> course = courseRepo.getCourseByName(courseDTO.getName());
 
                 if(course.isEmpty()){
-                    throw new StudentNotFoundException();
+                    throw new CourseNotFoundException();
                 }
 
                 enrolment.get().setCourse(course.get());
             }
 
-            enrolmentRepo.save(enrolment.get());
+            enrolmentRepo.saveAndFlush(enrolment.get());
         }
 
     }

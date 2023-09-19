@@ -42,7 +42,7 @@ public class EnrolmentQuerryImplService implements EnrolmentQuerryService {
             List<Enrolment> enrolment = enrolmentRepo.getEnrolmentsByStudentId(studentId);
 
             if (enrolment.isEmpty()) {
-                throw new EnrolmentNotFoundException();
+                throw new ListEmptyException();
             }
 
             return enrolment;
@@ -56,6 +56,16 @@ public class EnrolmentQuerryImplService implements EnrolmentQuerryService {
             }
 
             return enrolment;
+        }
+
+        public Enrolment getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(String courseName, String studentFirstName, String studentLastName) {
+            Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(courseName, studentFirstName, studentLastName);
+
+            if (enrolment.isEmpty()) {
+                throw new EnrolmentNotFoundException();
+            }
+
+            return enrolment.get();
         }
 
 
