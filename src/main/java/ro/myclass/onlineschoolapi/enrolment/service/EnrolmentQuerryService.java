@@ -13,4 +13,6 @@ public interface EnrolmentQuerryService {
     List<Enrolment> getEnrolmentByStudentId(long studentId);
     List<Enrolment> getEnrolmentByCourseId(long courseId);
 
+    Enrolment getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(String courseName, String studentFirstName, String studentLastName);
+
 }

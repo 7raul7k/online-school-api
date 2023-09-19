@@ -206,6 +206,6 @@ class CourseServiceTest {
         assertThrows(CourseNotFoundException.class, () -> courseCommandService.updateCourse(courseDTO));
     }
 
-    
+
 
 }

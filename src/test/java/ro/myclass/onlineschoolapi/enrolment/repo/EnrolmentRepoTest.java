@@ -11,6 +11,7 @@ import ro.myclass.onlineschoolapi.OnlineSchoolApiApplication;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.course.repo.CourseRepo;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
+import ro.myclass.onlineschoolapi.exceptions.EnrolmentNotFoundException;
 import ro.myclass.onlineschoolapi.student.model.Student;
 import ro.myclass.onlineschoolapi.student.repo.StudentRepo;
 
@@ -176,6 +177,24 @@ class EnrolmentRepoTest {
 
         assertEquals(enrolment, enrolmentRepo.getEnrolmentById(enrolment.getId()).get());
 
+    }
+
+    @Test
+    public void getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName() {
+
+        Student student = Student.builder().firstName("Popescu Andrei").lastName("Popescu").age(12).email("").adress("").build();
+
+        Course course = Course.builder().name("Matematica").department("Matematica").build();
+
+        Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
+
+        studentRepo.save(student);
+
+        courseRepo.save(course);
+
+        enrolmentRepo.save(enrolment);
+
+        assertEquals(enrolment, enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(course.getName(), student.getFirstName(), student.getLastName()).get());
 
     }
 }
