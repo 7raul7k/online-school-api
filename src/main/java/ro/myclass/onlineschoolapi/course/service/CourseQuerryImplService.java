@@ -30,8 +30,8 @@ public class CourseQuerryImplService implements CourseQuerryService {
 
     }
 
-    public Course getCourseById(String name) {
-        Optional<Course> course = courseRepo.getCourseByName(name);
+    public Course getCourseById(int id) {
+        Optional<Course> course = courseRepo.getCourseById(id);
 
         if (course.isEmpty()) {
             throw new CourseNotFoundException();
