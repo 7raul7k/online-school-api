@@ -3,6 +3,8 @@ package ro.myclass.onlineschoolapi.studentIdCard.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ro.myclass.onlineschoolapi.exceptions.ListEmptyException;
+import ro.myclass.onlineschoolapi.exceptions.StudentIdCardNotFoundException;
+import ro.myclass.onlineschoolapi.exceptions.StudentIdCardWasFoundException;
 import ro.myclass.onlineschoolapi.studentIdCard.model.StudentIdCard;
 import ro.myclass.onlineschoolapi.studentIdCard.repo.StudentIdCardRepo;
 
@@ -33,7 +35,7 @@ public class StudentIdCardQuerryImplService implements StudentIdCardQuerryServic
         Optional<StudentIdCard> studentIdCard = studentIdCardRepo.getStudentIdCardById(id);
 
         if (studentIdCard.isEmpty()) {
-            throw new ListEmptyException();
+            throw new StudentIdCardNotFoundException();
         }
 
         return studentIdCard.get();
@@ -43,7 +45,7 @@ public class StudentIdCardQuerryImplService implements StudentIdCardQuerryServic
         Optional<StudentIdCard> studentIdCard = studentIdCardRepo.getStudentIdCardByStudentId(studentId);
 
         if (studentIdCard.isEmpty()) {
-            throw new ListEmptyException();
+            throw new StudentIdCardNotFoundException();
         }
 
         return studentIdCard.get();

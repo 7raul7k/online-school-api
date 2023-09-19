@@ -145,7 +145,7 @@ class BookServiceTest {
     @Test
     public void addBookStudentException() {
 
-     
+
         StudentDTO studentDTO = StudentDTO.builder().email("email").firstName("Popescu").lastName("Andrei").adress("Bucuresti").build();
 
         BookDTO bookDTO = BookDTO.builder().name("Math").student(studentDTO).build();
