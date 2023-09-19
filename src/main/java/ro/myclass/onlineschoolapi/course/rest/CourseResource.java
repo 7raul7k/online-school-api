@@ -73,5 +73,14 @@ public class CourseResource {
         return new ResponseEntity<>(new CreateRestResponse("Course was updated"), HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteCourse")
+    public ResponseEntity<CreateRestResponse> deleteCourse(@RequestParam String name){
+        courseCommandService.deleteCourse(name);
+
+        log.info("REST request to delete course", name);
+
+        return new ResponseEntity<>(new CreateRestResponse("Course was deleted"), HttpStatus.OK);
+    }
+
 
 }
