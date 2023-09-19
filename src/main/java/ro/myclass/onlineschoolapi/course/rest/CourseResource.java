@@ -1,0 +1,77 @@
+package ro.myclass.onlineschoolapi.course.rest;
+
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
+import ro.myclass.onlineschoolapi.course.model.Course;
+import ro.myclass.onlineschoolapi.course.service.CourseCommandService;
+import ro.myclass.onlineschoolapi.course.service.CourseQuerryService;
+import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/course")
+@Slf4j
+public class CourseResource {
+
+    private CourseCommandService courseCommandService;
+
+    private CourseQuerryService courseQuerryService;
+
+    public CourseResource(CourseCommandService courseCommandService, CourseQuerryService courseQuerryService) {
+        this.courseCommandService = courseCommandService;
+        this.courseQuerryService = courseQuerryService;
+    }
+
+    @GetMapping("/allCourses")
+    public ResponseEntity<List<Course>> getAllCourses(){
+        List<Course> courseList = courseQuerryService.getAllCourses();
+
+        log.info("REST request to get all courses", courseList);
+
+        return new ResponseEntity<>(courseList, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/courseById")
+    public ResponseEntity<Course> getCourseById(@RequestParam int id){
+        Course course = courseQuerryService.getCourseById(id);
+
+        log.info("REST request to get course by id", course);
+
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
+
+    @GetMapping("/courseByName")
+    public ResponseEntity<CreateRestResponse> getCourseByName(@RequestParam String name){
+        Course course = courseQuerryService.getCourseByName(name);
+
+        log.info("REST request to get course by name", course);
+
+        return new ResponseEntity<>(new CreateRestResponse("Course with name " + name + " was found"), HttpStatus.OK);
+    }
+
+   @PostMapping("/addCourse")
+    public ResponseEntity<CreateRestResponse> addCourse(@RequestBody CourseDTO course){
+        courseCommandService.addCourse(course);
+
+        log.info("REST request to add course", course);
+
+        return new ResponseEntity<>(new CreateRestResponse("Course was added"), HttpStatus.OK);
+    }
+
+    @PutMapping("/updateCourse")
+    public ResponseEntity<CreateRestResponse> updateCourse(@RequestBody CourseDTO course){
+        courseCommandService.updateCourse(course);
+
+        log.info("REST request to update course", course);
+
+        return new ResponseEntity<>(new CreateRestResponse("Course was updated"), HttpStatus.OK);
+    }
+
+
+}
