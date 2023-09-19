@@ -27,9 +27,9 @@ public class ProfessorCommandImplService implements ProfessorCommandService {
             Professor professor1 = Professor.builder().firstName(professorDTO.getFirstName()).lastName(professorDTO.getLastName()).age(professorDTO.getAge()).email(professorDTO.getEmail()).adress(professorDTO.getAdress()).subject(professorDTO.getSubject()).build();
 
             professorRepo.save(professor1);
+        }else{
+            throw new ProfessorWasFoundException();
         }
-
-        throw new ProfessorWasFoundException();
 
     }
 
