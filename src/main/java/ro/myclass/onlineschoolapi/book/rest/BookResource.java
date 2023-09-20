@@ -82,6 +82,14 @@ public class BookResource {
         return new ResponseEntity<>(new CreateRestResponse("Book was updated"), HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteBook")
+    public ResponseEntity<CreateRestResponse> deleteBook(@RequestParam String name){
+        bookCommandService.deleteBook(name);
+
+        log.info("REST request to delete book", name);
+
+        return new ResponseEntity<>(new CreateRestResponse("Book was deleted"), HttpStatus.OK);
+    }
 
 
 
