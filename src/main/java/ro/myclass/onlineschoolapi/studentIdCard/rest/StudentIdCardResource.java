@@ -16,12 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/studentIdCard")
 @Slf4j
-public class StudentIdCardRest {
+public class StudentIdCardResource {
     private StudentIdCardCommandService studentIdCardCommandService;
 
     private StudentIdCardQuerryService studentIdCardQuerryService;
 
-    public StudentIdCardRest(StudentIdCardCommandService studentIdCardCommandService, StudentIdCardQuerryService studentIdCardQuerryService) {
+    public StudentIdCardResource(StudentIdCardCommandService studentIdCardCommandService, StudentIdCardQuerryService studentIdCardQuerryService) {
         this.studentIdCardCommandService = studentIdCardCommandService;
         this.studentIdCardQuerryService = studentIdCardQuerryService;
     }
