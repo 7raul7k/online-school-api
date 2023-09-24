@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ro.myclass.onlineschoolapi.OnlineSchoolApiApplication;
 import ro.myclass.onlineschoolapi.course.model.Course;
-import ro.myclass.onlineschoolapi.professor.model.Professor;
+
 
 import java.util.ArrayList;
 import java.util.List;
