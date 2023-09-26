@@ -105,23 +105,10 @@ class BookServiceTest {
         assertThrows(BookNotFoundException.class, () -> bookQuerryService.getBookByName("Math"));
     }
 
-    @Test
-    public void getBookByStudent() {
-        Book book = Book.builder().bookName("Math").build();
-
-        doReturn(Optional.of(book)).when(bookRepo).getBookByStudent(1);
-
-        assertEquals(book, bookQuerryService.getBookByStudent(1));
-    }
 
 
-    @Test
-    public void getBookByStudentException() {
 
-        doReturn(Optional.empty()).when(bookRepo).getBookByStudent(1);
 
-        assertThrows(BookNotFoundException.class, () -> bookQuerryService.getBookByStudent(1));
-    }
 
     @Test
     public void addBook() {

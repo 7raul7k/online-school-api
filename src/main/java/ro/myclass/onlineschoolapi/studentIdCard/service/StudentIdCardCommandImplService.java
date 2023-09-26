@@ -70,7 +70,7 @@ public class StudentIdCardCommandImplService implements StudentIdCardCommandServ
         Optional<StudentIdCard> studentIdCard = studentIdCardRepo.getStudentIdCardByCardNumber(cardNumber);
 
         if(studentIdCard.isEmpty()){
-            throw new StudentNotFoundException();
+            throw new StudentIdCardNotFoundException();
         }else{
             studentIdCardRepo.delete(studentIdCard.get());
         }

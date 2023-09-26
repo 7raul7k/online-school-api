@@ -28,9 +28,11 @@ class BookRepoTest {
     @Autowired
     public StudentRepo studentRepo;
 
+
     @BeforeEach
     public void clean() {
         bookRepo.deleteAll();
+        studentRepo.deleteAll();
     }
 
     @Test
@@ -56,29 +58,25 @@ class BookRepoTest {
 
     @Test
     public void getBookByName() {
+
         Book book = Book.builder().bookName("Matematica").id(1).build();
         bookRepo.save(book);
+
+
+
+
         assertEquals(book, bookRepo.getBookByName("Matematica").get());
     }
 
     @Test
     public void getBookById() {
-        Book book = Book.builder().bookName("Matematica").id(1).build();
+
+        Book book = Book.builder().bookName("Matematica").build();
         bookRepo.save(book);
+
         assertEquals(book, bookRepo.getBookById(1).get());
     }
 
-     @Test
-    public void getBookByStudent(){
-         Student student = Student.builder().firstName("Popescu Andrei").lastName("Popescu").age(12).email("").adress("").build();
 
-            Book book = Book.builder().bookName("Matematica").id(1).student(student).build();
-
-            bookRepo.save(book);
-
-            studentRepo.save(student);
-
-            assertEquals(book, bookRepo.getBookByStudent(1).get());
-     }
 
 }

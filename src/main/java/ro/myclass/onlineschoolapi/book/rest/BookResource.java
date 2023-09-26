@@ -55,14 +55,7 @@ public class BookResource {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @GetMapping("/getBooksByStudentId")
-    public ResponseEntity<Book> getBooksByStudentId(@RequestParam int studentId){
-       Book book = bookQuerryService.getBookByStudent((long) studentId);
 
-        log.info("REST request to get book by student id", book);
-
-        return new ResponseEntity<>(book, HttpStatus.OK);
-    }
 
     @PostMapping("/addBook")
     public ResponseEntity<CreateRestResponse> addBook(@RequestBody BookDTO book){

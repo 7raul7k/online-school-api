@@ -150,7 +150,7 @@ class CourseResourceTest {
 
         CourseDTO course = CourseDTO.builder().name(faker.educator().course()).build();
 
-        restMockMvc.perform(post("/api/v1/course/updateCourse")
+        restMockMvc.perform(put("/api/v1/course/updateCourse")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isOk());
