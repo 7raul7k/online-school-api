@@ -207,7 +207,7 @@ class StudentIdCardServiceTest {
         doReturn(Optional.of(studentIdCard)).when(studentIdCardRepo).getStudentIdCardByCardNumber(123);
 
         this.studentIdCardCommandService.deleteStudentIdCard(123);
-        
+
         verify(studentIdCardRepo,times(1)).delete(argumentCaptor.capture());
 
         assertEquals(argumentCaptor.getValue(),studentIdCard);

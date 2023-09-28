@@ -13,8 +13,7 @@ import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 @SuperBuilder
 public class EnrolmentDTO {
 
-        private String studentEmail;
-        private String courseName;
-        private String studentFirstName;
-        private String studentLastName;
+        private StudentDTO studentdto;
+
+        private CourseDTO courseDTO;
 }

@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/student")
 @Slf4j
+@CrossOrigin
 public class StudentResources {
 
     private StudentCommandService studentCommandService;
@@ -40,7 +41,7 @@ public class StudentResources {
     }
 
     @GetMapping("/studentById")
-    public ResponseEntity<Student> getStudentById(@RequestParam long id){
+    public ResponseEntity<Student> getStudentById(@RequestParam int id){
         Student student = studentQueryService.getStudentById(id);
 
         log.info("REST request to get student by id", student);

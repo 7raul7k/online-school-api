@@ -171,7 +171,7 @@ class EnrolmentServiceTest {
         Course course = Course.builder().name("Math").department("Math").enrolment(new ArrayList<>()).build();
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
-        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentEmail("").studentFirstName("Popescu").studentLastName("Andrei").courseName("Math").build();
+        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build();
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
         doReturn(Optional.empty()).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName("Math", "Popescu", "Andrei");
@@ -194,7 +194,7 @@ class EnrolmentServiceTest {
 
         doReturn(Optional.empty()).when(studentRepo).findStudentByEmail("");
 
-        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build();
+        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build();
 
         assertThrows(StudentNotFoundException.class, () -> enrolmentCommandService.addEnrolment(enrolmentDTO));
     }
@@ -209,7 +209,7 @@ class EnrolmentServiceTest {
         doReturn(Optional.of(student)).when(studentRepo).findStudentByEmail("");
         doReturn(Optional.empty()).when(courseRepo).getCourseByName("Math");
 
-        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build();
+        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build();
 
         assertThrows(CourseNotFoundException.class, () -> enrolmentCommandService.addEnrolment(enrolmentDTO));
     }
@@ -222,7 +222,7 @@ class EnrolmentServiceTest {
         CourseDTO courseDTO = CourseDTO.builder().name("Math").department("Math").build();
         StudentDTO studentDTO = StudentDTO.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
-        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build();
+        EnrolmentDTO enrolmentDTO = EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build();
 
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
         doReturn(Optional.of(enrolment)).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName("Math", "Popescu", "Andrei");
@@ -263,6 +263,9 @@ class EnrolmentServiceTest {
         Course course = Course.builder().name("Math").department("Math").enrolment(new ArrayList<>()).build();
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
+        CourseDTO courseDTO = CourseDTO.builder().name("Math").department("Math").build();
+        StudentDTO studentDTO = StudentDTO.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
+
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
         doReturn(Optional.of(enrolment)).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(course.getName(), student.getFirstName(), student.getLastName());
@@ -271,7 +274,7 @@ class EnrolmentServiceTest {
 
         doReturn(Optional.of(course)).when(courseRepo).getCourseByName(course.getName());
 
-        enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build());
+        enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build());
 
         verify(enrolmentRepo, times(1)).saveAndFlush(argumentCaptor.capture());
 
@@ -284,6 +287,11 @@ class EnrolmentServiceTest {
         Course course = Course.builder().name("Math").department("Math").enrolment(new ArrayList<>()).build();
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
+        CourseDTO courseDTO = CourseDTO.builder().name("Math").department("Math").build();
+        StudentDTO studentDTO = StudentDTO.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
+
+
+
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
         doReturn(Optional.of(enrolment)).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName("Math", "Popescu", "Andrei");
@@ -291,7 +299,7 @@ class EnrolmentServiceTest {
         doReturn(Optional.empty()).when(studentRepo).findStudentByEmail("");
 
 
-        assertThrows(StudentNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build()));
+        assertThrows(StudentNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build()));
     }
 
     @Test
@@ -299,6 +307,11 @@ class EnrolmentServiceTest {
 
         Course course = Course.builder().name("Math").department("Math").enrolment(new ArrayList<>()).build();
         Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
+
+        CourseDTO courseDTO = CourseDTO.builder().name("Math").department("Math").build();
+        StudentDTO studentDTO = StudentDTO.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
+
+
 
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
@@ -308,20 +321,19 @@ class EnrolmentServiceTest {
 
         doReturn(Optional.empty()).when(courseRepo).getCourseByName("Math");
 
-        assertThrows(CourseNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentEmail("").studentFirstName("Popescu").studentLastName("Andrei").courseName("Math").build()));
+        assertThrows(CourseNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build()));
     }
         @Test
     public void updateEnrolmentException() {
 
-        Course course = Course.builder().name("Math").department("Math").enrolment(new ArrayList<>()).build();
-        Student student = Student.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
+            CourseDTO courseDTO = CourseDTO.builder().name("Math").department("Math").build();
+            StudentDTO studentDTO = StudentDTO.builder().firstName("Popescu").lastName("Andrei").age(12).email("").adress("").build();
 
-        Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
-        doReturn(Optional.empty()).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName("Math", "Popescu", "Andrei");
+            doReturn(Optional.empty()).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName("Math", "Popescu", "Andrei");
 
-        EnrolmentDTO.builder().studentFirstName("Popescu").studentLastName("Andrei").studentEmail("").courseName("Math").build();
-        assertThrows(EnrolmentNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentEmail("").studentFirstName("Popescu").studentLastName("Andrei").courseName("Math").build()));
+
+        assertThrows(EnrolmentNotFoundException.class, () -> enrolmentCommandService.updateEnrolment(EnrolmentDTO.builder().studentdto(studentDTO).courseDTO(courseDTO).build()));
         }
 
     @Test
