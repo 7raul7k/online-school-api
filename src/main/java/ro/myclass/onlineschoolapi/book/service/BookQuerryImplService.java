@@ -48,15 +48,7 @@ public class BookQuerryImplService implements BookQuerryService{
         return book.get();
     }
 
-    public Book getBookByStudent(long studentId) {
-        Optional<Book> book = bookRepo.getBookByStudent(studentId);
 
-        if (book.isEmpty()) {
-            throw new BookNotFoundException();
-        }
-
-        return book.get();
-    }
 
 
 

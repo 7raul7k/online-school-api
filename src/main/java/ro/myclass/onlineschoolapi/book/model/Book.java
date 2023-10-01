@@ -34,4 +34,21 @@ public class Book {
     private Student student;
 
 
+    @Override
+    public String toString(){
+        return id+","+bookName;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        Book b = (Book) obj;
+
+        if(this.bookName.equals(b.bookName)){
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

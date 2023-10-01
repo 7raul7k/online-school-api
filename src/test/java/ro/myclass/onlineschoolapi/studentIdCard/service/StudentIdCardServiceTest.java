@@ -7,10 +7,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ro.myclass.onlineschoolapi.exceptions.ListEmptyException;
-import ro.myclass.onlineschoolapi.exceptions.StudentIdCardNotFoundException;
-import ro.myclass.onlineschoolapi.exceptions.StudentIdCardWasFoundException;
-import ro.myclass.onlineschoolapi.exceptions.StudentNotFoundException;
+import ro.myclass.onlineschoolapi.exceptions.*;
 import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 import ro.myclass.onlineschoolapi.student.model.Student;
 import ro.myclass.onlineschoolapi.student.repo.StudentRepo;
@@ -23,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudentIdCardServiceTest {
@@ -126,6 +123,8 @@ class StudentIdCardServiceTest {
 
         studentIdCardCommandService.addStudentIdCard(studentIdCardDTO);
 
+        verify(studentIdCardRepo,times(1)).save(argumentCaptor.capture());
+
         assertEquals(studentIdCard, argumentCaptor.getValue());
     }
 
@@ -136,7 +135,7 @@ class StudentIdCardServiceTest {
 
         doReturn(Optional.empty()).when(studentRepo).findStudentByEmail("email");
 
-        assertThrows(StudentNotFoundException.class, () -> studentIdCardCommandService.addStudentIdCard(studentIdCardDTO));
+        assertThrows(StudentIdCardWasFoundException.class, () -> studentIdCardCommandService.addStudentIdCard(studentIdCardDTO));
     }
 
 
@@ -194,5 +193,33 @@ class StudentIdCardServiceTest {
         doReturn(Optional.empty()).when(studentIdCardRepo).getStudentIdCardByCardNumber(123);
 
         assertThrows(StudentIdCardNotFoundException.class, () -> studentIdCardCommandService.updateStudentIdCard(studentIdCardDTO));
+    }
+
+    @Test
+    public void deleteStudentIdCard(){
+
+        Student student = Student.builder().email("email").firstName("Popescu").lastName("Andrei").adress("Bucuresti").build();
+
+        StudentDTO studentDTO = StudentDTO.builder().email("email").firstName("Popescu").lastName("Andrei").adress("Bucuresti").build();
+        StudentIdCardDTO studentIdCardDTO = StudentIdCardDTO.builder().cardNumber(123).student(studentDTO).build();
+
+        StudentIdCard studentIdCard = StudentIdCard.builder().cardNumber(123).student(student).build();
+        doReturn(Optional.of(studentIdCard)).when(studentIdCardRepo).getStudentIdCardByCardNumber(123);
+
+        this.studentIdCardCommandService.deleteStudentIdCard(123);
+
+        verify(studentIdCardRepo,times(1)).delete(argumentCaptor.capture());
+
+        assertEquals(argumentCaptor.getValue(),studentIdCard);
+
+
+    }
+
+    @Test
+    public void deleteStudentIdCardException(){
+
+        doReturn(Optional.empty()).when(studentIdCardRepo).getStudentIdCardByCardNumber(123);
+
+        assertThrows(StudentIdCardNotFoundException.class,() -> studentIdCardCommandService.deleteStudentIdCard(123));
     }
 }

@@ -25,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,7 +90,7 @@ class StudentResourcesTest {
                 .email(faker.internet().emailAddress())
                 .build();
 
-        doReturn(student).when(studentQuerryService).getStudentById((long) 1);
+        doReturn(student).when(studentQuerryService).getStudentById(1);
 
         restMockMvc.perform(get("/api/v1/student/studentById").param("id", String.valueOf(1)))
                 .andExpect(status().isOk())
@@ -100,7 +99,7 @@ class StudentResourcesTest {
 
     @Test
     public void getStudentByIdBadRequest() throws Exception {
-        doThrow(StudentNotFoundException.class).when(studentQuerryService).getStudentById((long) 1);
+        doThrow(StudentNotFoundException.class).when(studentQuerryService).getStudentById( 1);
 
         restMockMvc.perform(get("/api/v1/student/studentById").param("id", String.valueOf(1)))
                 .andExpect(status().isBadRequest());
@@ -239,7 +238,7 @@ class StudentResourcesTest {
 
         doNothing().when(studentCommandService).updateStudent(any());
 
-        restMockMvc.perform(post("/api/v1/student/updateStudent")
+        restMockMvc.perform(put("/api/v1/student/updateStudent")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(student)))
                 .andExpect(status().isOk());

@@ -11,7 +11,7 @@ public interface StudentQuerryService  {
 
     List<Student> getAllStudents();
 
-    Student getStudentById(long id);
+    Student getStudentById(int id);
 
     Student getStudentByFirstNameAndLastName(String firstName, String lastName);
 

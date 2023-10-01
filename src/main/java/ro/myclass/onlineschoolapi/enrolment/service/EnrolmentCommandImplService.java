@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class EnrolmentCommandImplService  implements EnrolmentCommandService{
+public class EnrolmentCommandImplService  implements EnrolmentCommandService {
 
     private EnrolmentRepo enrolmentRepo;
 
@@ -37,26 +37,30 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
 
     public void addEnrolment(EnrolmentDTO enrolmentDTO) {
 
-        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(enrolmentDTO.getCourse().getName(), enrolmentDTO.getStudent().getFirstName(), enrolmentDTO.getStudent().getLastName());
+        StudentDTO studentDTO = enrolmentDTO.getStudentdto();
+        CourseDTO courseDTO = enrolmentDTO.getCourseDTO();
 
-        if(enrolment.isEmpty()){
-            StudentDTO studentDTO = enrolmentDTO.getStudent();
-            CourseDTO courseDTO = enrolmentDTO.getCourse();
+
+        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(courseDTO.getName(),studentDTO.getFirstName(),studentDTO.getLastName());
+
+
+        if (enrolment.isEmpty()) {
+
             Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());
 
-            if(student.isEmpty()){
+            if (student.isEmpty()) {
                 throw new StudentNotFoundException();
             }
             Optional<Course> course = courseRepo.getCourseByName(courseDTO.getName());
 
-            if(course.isEmpty()){
+            if (course.isEmpty()) {
                 throw new CourseNotFoundException();
             }
 
             Enrolment enrolment1 = Enrolment.builder().student(student.get()).course(course.get()).build();
 
             enrolmentRepo.save(enrolment1);
-        }else{
+        } else {
             throw new EnrolmentWasFoundException();
         }
 
@@ -66,44 +70,46 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService{
 
         Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentById(id);
 
-        if(enrolment.isEmpty()){
+        if (enrolment.isEmpty()) {
             throw new EnrolmentNotFoundException();
-        }else{
+        } else {
             enrolmentRepo.delete(enrolment.get());
         }
 
     }
 
-    public void updateEnrolment(EnrolmentDTO enrolmentDTO){
+    public void updateEnrolment(EnrolmentDTO enrolmentDTO) {
 
-        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(enrolmentDTO.getCourse().getName(), enrolmentDTO.getStudent().getFirstName(), enrolmentDTO.getStudent().getLastName());
+        StudentDTO studentDTO = enrolmentDTO.getStudentdto();
+        CourseDTO courseDTO = enrolmentDTO.getCourseDTO();
 
-        if(enrolment.isEmpty()) {
+
+        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(courseDTO.getName(), studentDTO.getFirstName(), studentDTO.getLastName());
+
+
+
+        if (enrolment.isEmpty()) {
             throw new EnrolmentNotFoundException();
-        }else{
+        } else {
 
-            if(enrolmentDTO.getStudent() != null){
-                StudentDTO studentDTO = enrolmentDTO.getStudent();
-                Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());
+            Optional<Student> student = studentRepo.findStudentByEmail(studentDTO.getEmail());
 
-                if(student.isEmpty()){
-                    throw new StudentNotFoundException();
-                }
-
-                enrolment.get().setStudent(student.get());
-            } if(enrolmentDTO.getCourse() !=null){
-                CourseDTO courseDTO = enrolmentDTO.getCourse();
-                Optional<Course> course = courseRepo.getCourseByName(courseDTO.getName());
-
-                if(course.isEmpty()){
-                    throw new CourseNotFoundException();
-                }
-
-                enrolment.get().setCourse(course.get());
+            if(student.isEmpty()){
+                throw new StudentNotFoundException();
             }
 
-            enrolmentRepo.saveAndFlush(enrolment.get());
-        }
+            Optional<Course> course = courseRepo.getCourseByName(courseDTO.getName());
 
+            if(course.isEmpty()){
+                throw new CourseNotFoundException();
+            }
+
+            enrolment.get().setStudent(student.get());
+            enrolment.get().setCourse(course.get());
+
+            enrolmentRepo.saveAndFlush(enrolment.get());
+
+
+        }
     }
 }

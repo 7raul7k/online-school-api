@@ -194,7 +194,7 @@ class EnrolmentResourceTest {
 
         CourseDTO course = CourseDTO.builder().name(faker.educator().course()).build();
 
-        EnrolmentDTO enrolment = EnrolmentDTO.builder().student(student).course(course).build();
+        EnrolmentDTO enrolment = EnrolmentDTO.builder().studentdto(student).courseDTO(course).build();
 
         doNothing().when(enrolmentCommandService).addEnrolment(enrolment);
         restMockMvc.perform(post("/api/v1/enrolment/addEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(enrolment)))
@@ -211,7 +211,7 @@ class EnrolmentResourceTest {
 
         CourseDTO course = CourseDTO.builder().name(faker.educator().course()).build();
 
-        EnrolmentDTO enrolment = EnrolmentDTO.builder().student(student).course(course).build();
+        EnrolmentDTO enrolment = EnrolmentDTO.builder().studentdto(student).courseDTO(course).build();
 
         doThrow(ListEmptyException.class).when(enrolmentCommandService).addEnrolment(enrolment);
         restMockMvc.perform(post("/api/v1/enrolment/addEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(enrolment)))
@@ -228,7 +228,7 @@ class EnrolmentResourceTest {
 
         CourseDTO course = CourseDTO.builder().name(faker.educator().course()).build();
 
-        EnrolmentDTO enrolment = EnrolmentDTO.builder().student(student).course(course).build();
+        EnrolmentDTO enrolment = EnrolmentDTO.builder().studentdto(student).courseDTO(course).build();
 
         doNothing().when(enrolmentCommandService).updateEnrolment(enrolment);
         restMockMvc.perform(put("/api/v1/enrolment/updateEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(enrolment)))
@@ -245,7 +245,7 @@ class EnrolmentResourceTest {
 
         CourseDTO course = CourseDTO.builder().name(faker.educator().course()).build();
 
-        EnrolmentDTO enrolment = EnrolmentDTO.builder().student(student).course(course).build();
+        EnrolmentDTO enrolment = EnrolmentDTO.builder().studentdto(student).courseDTO(course).build();
 
         doThrow(ListEmptyException.class).when(enrolmentCommandService).updateEnrolment(enrolment);
         restMockMvc.perform(put("/api/v1/enrolment/updateEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(enrolment)))

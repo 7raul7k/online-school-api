@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/course")
 @Slf4j
+@CrossOrigin
 public class CourseResource {
 
     private CourseCommandService courseCommandService;
@@ -28,10 +29,12 @@ public class CourseResource {
     }
 
     @GetMapping("/allCourses")
-    public ResponseEntity<List<Course>> getAllCourses(){
+    public ResponseEntity<List<Course>> getAllCourses() throws InterruptedException {
         List<Course> courseList = courseQuerryService.getAllCourses();
 
         log.info("REST request to get all courses", courseList);
+
+        Thread.sleep(5000);
 
         return new ResponseEntity<>(courseList, HttpStatus.OK);
 

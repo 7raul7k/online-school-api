@@ -131,30 +131,9 @@ class BookResourceTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void getBooksByStudentId() throws Exception{
 
-        Faker faker = new Faker();
 
-        Student student = Student.builder().firstName("Popescu Andrei").lastName("Popescu").age(12).email("").adress("Bucuresti").build();
 
-        Book book = Book.builder().bookName(faker.book().title()).student(student).build();
-
-        doReturn(book).when(bookQuerryService).getBookByStudent(student.getId());
-
-        restMockMvc.perform(get("/api/v1/book/getBooksByStudentId?studentId=" + student.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(book)));
-    }
-
-    @Test
-    public void getBooksByStudentIdBadRequest() throws Exception{
-        doThrow(ListEmptyException.class).when(bookQuerryService).getBookByStudent(1);
-
-        restMockMvc.perform(get("/api/v1/book/getBooksByStudentId?studentId=1"))
-                .andExpect(status().isBadRequest());
-    }
 
     @Test
     public void addBook() throws Exception{

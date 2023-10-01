@@ -12,11 +12,8 @@ import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 @NoArgsConstructor
 @SuperBuilder
 public class EnrolmentDTO {
-        private String studentName;
-        private String courseName;
-        private String professorName;
-        private String department;
-        private String grade;
-        private StudentDTO student;
-        private CourseDTO course;
+
+        private StudentDTO studentdto;
+
+        private CourseDTO courseDTO;
 }

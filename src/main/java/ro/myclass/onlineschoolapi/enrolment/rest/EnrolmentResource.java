@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/enrolment")
 @Slf4j
+@CrossOrigin
 public class EnrolmentResource {
 
     private EnrolmentCommandService enrolmentCommandService;

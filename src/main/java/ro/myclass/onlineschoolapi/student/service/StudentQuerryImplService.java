@@ -30,7 +30,7 @@ public class StudentQuerryImplService implements StudentQuerryService {
         return studentList;
     }
 
-    public Student getStudentById(long id) {
+    public Student getStudentById(int id) {
         Optional<Student> student = studentRepo.getStudentById(id);
 
         if (student.isEmpty()) {
