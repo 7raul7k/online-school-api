@@ -105,6 +105,7 @@ public class CourseResource {
 
         CoursePDF coursePDF = new CoursePDF(courseList);
 
+        response.setHeader(headerKey,headerValue);
         coursePDF.generate(response);
 
         return new ResponseEntity<>(new CreateRestResponse("PDF was generated"),HttpStatus.OK);
