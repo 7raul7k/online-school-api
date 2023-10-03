@@ -145,7 +145,7 @@ public class StudentResources {
     }
 
     @GetMapping("/exportPDF")
-    public ResponseEntity<CreateRestResponse> exportPdf(HttpServletResponse response)throws Exception {
+    public ResponseEntity<CreateRestResponse> exportStudentsPdf(HttpServletResponse response)throws Exception {
 
         response.setContentType("application/pdf");
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
@@ -156,6 +156,7 @@ public class StudentResources {
 
         List<Student> studentList = this.studentQueryService.getAllStudents();
 
+        response.setHeader(headerKey,headerValue);
         StudentPDF studentPDF = new StudentPDF(studentList);
 
         studentPDF.generate(response);
