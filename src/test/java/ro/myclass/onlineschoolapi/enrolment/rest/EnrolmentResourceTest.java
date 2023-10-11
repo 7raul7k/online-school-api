@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.enrolment.dto.EnrolmentDTO;
+import ro.myclass.onlineschoolapi.enrolment.dto.RemoveEnrolmentDTO;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.enrolment.service.EnrolmentCommandService;
 import ro.myclass.onlineschoolapi.enrolment.service.EnrolmentQuerryService;
@@ -256,19 +257,22 @@ class EnrolmentResourceTest {
     @Test
     public void deleteEnrolment() throws Exception{
 
-        doNothing().when(enrolmentCommandService).deleteEnrolment(1L);
+        RemoveEnrolmentDTO removeEnrolmentDTO = RemoveEnrolmentDTO.builder().firstName("Popescu").lastName("Andrei").courseName("Matematica").build();
 
-        restMockMvc.perform(delete("/api/v1/enrolment/deleteEnrolment?id=1"))
-                .andExpect(status().isOk());
+        doNothing().when(enrolmentCommandService).deleteEnrolment(removeEnrolmentDTO);
+
+      restMockMvc.perform(delete("/api/v1/enrolment/deleteEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(removeEnrolmentDTO))).andExpect(status().isOk());
 
     }
 
     @Test
     public void deleteEnrolmentBadRequest() throws Exception{
 
-        doThrow(ListEmptyException.class).when(enrolmentCommandService).deleteEnrolment(1L);
+        RemoveEnrolmentDTO removeEnrolmentDTO = RemoveEnrolmentDTO.builder().firstName("Popescu").lastName("Andrei").courseName("Matematica").build();
 
-        restMockMvc.perform(delete("/api/v1/enrolment/deleteEnrolment?id=1"))
+        doThrow(ListEmptyException.class).when(enrolmentCommandService).deleteEnrolment(removeEnrolmentDTO);
+
+        restMockMvc.perform(delete("/api/v1/enrolment/deleteEnrolment").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(removeEnrolmentDTO)))
                 .andExpect(status().isBadRequest());
 
     }

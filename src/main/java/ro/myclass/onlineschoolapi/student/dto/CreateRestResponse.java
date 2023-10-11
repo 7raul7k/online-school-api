@@ -1,4 +1,4 @@
-package ro.myclass.onlineschoolapi.student;
+package ro.myclass.onlineschoolapi.student.dto;
 
 
 import lombok.AllArgsConstructor;

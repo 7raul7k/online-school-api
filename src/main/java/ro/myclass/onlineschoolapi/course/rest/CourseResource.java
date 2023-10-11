@@ -5,12 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ro.myclass.onlineschoolapi.course.PdfGenerator.CoursePDF;
 import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.course.service.CourseCommandService;
 import ro.myclass.onlineschoolapi.course.service.CourseQuerryService;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -83,6 +88,27 @@ public class CourseResource {
         log.info("REST request to delete course", name);
 
         return new ResponseEntity<>(new CreateRestResponse("Course was deleted"), HttpStatus.OK);
+    }
+
+    @GetMapping("/exportPDF")
+    public ResponseEntity<CreateRestResponse> exportCoursesPDF(HttpServletResponse response) throws Exception{
+
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+
+        String currentDate = dateFormat.format(new Date());
+
+        String headerKey="Content-Disposition";
+        String headerValue ="attachment;filename=coursesPdf_" + currentDate + ".pdf";
+
+        List<Course> courseList = this.courseQuerryService.getAllCourses();
+
+        CoursePDF coursePDF = new CoursePDF(courseList);
+
+        response.setHeader(headerKey,headerValue);
+        coursePDF.generate(response);
+
+        return new ResponseEntity<>(new CreateRestResponse("PDF was generated"),HttpStatus.OK);
     }
 
 

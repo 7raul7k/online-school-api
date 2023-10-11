@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.PdfGenerator.StudentPDF;
 import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 import ro.myclass.onlineschoolapi.student.model.Student;
 import ro.myclass.onlineschoolapi.student.service.StudentCommandService;
 import ro.myclass.onlineschoolapi.student.service.StudentQuerryService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -137,6 +142,30 @@ public class StudentResources {
         log.info("REST request to get student by first name and last name and age", student);
 
         return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @GetMapping("/exportPDF")
+    public ResponseEntity<CreateRestResponse> exportStudentsPdf(HttpServletResponse response)throws Exception {
+
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+        String currentDate = dateFormat.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=studentsPdf_" +  currentDate +".pdf";
+
+        List<Student> studentList = this.studentQueryService.getAllStudents();
+
+        response.setHeader(headerKey,headerValue);
+        StudentPDF studentPDF = new StudentPDF(studentList);
+
+        studentPDF.generate(response);
+
+        return new ResponseEntity<>(new CreateRestResponse("PDF was created successfully"),HttpStatus.OK);
+
+
+
+
     }
     
 
