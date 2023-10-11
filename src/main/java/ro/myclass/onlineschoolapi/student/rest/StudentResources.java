@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
 import ro.myclass.onlineschoolapi.student.PdfGenerator.StudentPDF;
 import ro.myclass.onlineschoolapi.student.dto.StudentDTO;
 import ro.myclass.onlineschoolapi.student.model.Student;

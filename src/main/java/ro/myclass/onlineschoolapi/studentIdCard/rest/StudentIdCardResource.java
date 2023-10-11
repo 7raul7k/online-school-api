@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
 import ro.myclass.onlineschoolapi.studentIdCard.dto.StudentIdCardDTO;
 import ro.myclass.onlineschoolapi.studentIdCard.model.StudentIdCard;
 import ro.myclass.onlineschoolapi.studentIdCard.service.StudentIdCardCommandService;

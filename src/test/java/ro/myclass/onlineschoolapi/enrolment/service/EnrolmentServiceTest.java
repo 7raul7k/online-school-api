@@ -11,6 +11,7 @@ import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.course.repo.CourseRepo;
 import ro.myclass.onlineschoolapi.enrolment.dto.EnrolmentDTO;
+import ro.myclass.onlineschoolapi.enrolment.dto.RemoveEnrolmentDTO;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.enrolment.repo.EnrolmentRepo;
 import ro.myclass.onlineschoolapi.exceptions.*;
@@ -240,9 +241,12 @@ class EnrolmentServiceTest {
 
         Enrolment enrolment = Enrolment.builder().student(student).course(course).build();
 
-        doReturn(Optional.of(enrolment)).when(enrolmentRepo).getEnrolmentById(1);
 
-        enrolmentCommandService.deleteEnrolment(1);
+        RemoveEnrolmentDTO removeEnrolmentDTO = RemoveEnrolmentDTO.builder().firstName("Popescu").lastName("Andrei").courseName("Matematica").build();
+
+        doReturn(Optional.of(enrolment)).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(course.getName(), student.getFirstName(),student.getLastName());
+
+        enrolmentCommandService.deleteEnrolment(removeEnrolmentDTO);
 
         verify(enrolmentRepo, times(1)).delete(argumentCaptor.capture());
 
@@ -251,10 +255,12 @@ class EnrolmentServiceTest {
 
     @Test
     public void deleteEnrolmentException() {
+        RemoveEnrolmentDTO removeEnrolmentDTO = RemoveEnrolmentDTO.builder().firstName("Popescu").lastName("Andrei").courseName("Matematica").build();
 
-        doReturn(Optional.empty()).when(enrolmentRepo).getEnrolmentById(1);
 
-        assertThrows(EnrolmentNotFoundException.class, () -> enrolmentCommandService.deleteEnrolment(1));
+        doReturn(Optional.empty()).when(enrolmentRepo).getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(removeEnrolmentDTO.getCourseName(), removeEnrolmentDTO.getFirstName(),removeEnrolmentDTO.getLastName());
+
+        assertThrows(EnrolmentNotFoundException.class, () -> enrolmentCommandService.deleteEnrolment(removeEnrolmentDTO));
     }
 
     @Test

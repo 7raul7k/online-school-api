@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.myclass.onlineschoolapi.enrolment.PdfGenerator.EnrolmentPDF;
 import ro.myclass.onlineschoolapi.enrolment.dto.EnrolmentDTO;
+import ro.myclass.onlineschoolapi.enrolment.dto.RemoveEnrolmentDTO;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.enrolment.service.EnrolmentCommandService;
 import ro.myclass.onlineschoolapi.enrolment.service.EnrolmentQuerryService;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,10 +89,10 @@ public class EnrolmentResource {
     }
 
     @DeleteMapping("/deleteEnrolment")
-    public ResponseEntity<CreateRestResponse> deleteEnrolment(@RequestParam long id){
-        enrolmentCommandService.deleteEnrolment(id);
+    public ResponseEntity<CreateRestResponse> deleteEnrolment(@RequestBody RemoveEnrolmentDTO removeEnrolmentDTO){
+        enrolmentCommandService.deleteEnrolment(removeEnrolmentDTO);
 
-        log.info("REST request to delete enrolment", id);
+        log.info("REST request to delete enrolment by removeEnrolmentDTO", removeEnrolmentDTO);
 
         return new ResponseEntity<>(new CreateRestResponse("Enrolment was deleted"), HttpStatus.OK);
     }

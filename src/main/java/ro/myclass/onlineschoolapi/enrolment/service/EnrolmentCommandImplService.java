@@ -7,6 +7,7 @@ import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.course.repo.CourseRepo;
 import ro.myclass.onlineschoolapi.enrolment.dto.EnrolmentDTO;
+import ro.myclass.onlineschoolapi.enrolment.dto.RemoveEnrolmentDTO;
 import ro.myclass.onlineschoolapi.enrolment.model.Enrolment;
 import ro.myclass.onlineschoolapi.enrolment.repo.EnrolmentRepo;
 import ro.myclass.onlineschoolapi.exceptions.CourseNotFoundException;
@@ -66,9 +67,9 @@ public class EnrolmentCommandImplService  implements EnrolmentCommandService {
 
     }
 
-    public void deleteEnrolment(long id) {
+    public void deleteEnrolment(RemoveEnrolmentDTO removeEnrolmentDTO) {
 
-        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentById(id);
+        Optional<Enrolment> enrolment = enrolmentRepo.getEnrolmentByCourseNameAndStudentFirstNameAndStudentLastName(removeEnrolmentDTO.getCourseName(), removeEnrolmentDTO.getFirstName(), removeEnrolmentDTO.getLastName());
 
         if (enrolment.isEmpty()) {
             throw new EnrolmentNotFoundException();

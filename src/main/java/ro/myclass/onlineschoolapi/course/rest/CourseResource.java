@@ -10,7 +10,7 @@ import ro.myclass.onlineschoolapi.course.dto.CourseDTO;
 import ro.myclass.onlineschoolapi.course.model.Course;
 import ro.myclass.onlineschoolapi.course.service.CourseCommandService;
 import ro.myclass.onlineschoolapi.course.service.CourseQuerryService;
-import ro.myclass.onlineschoolapi.student.CreateRestResponse;
+import ro.myclass.onlineschoolapi.student.dto.CreateRestResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;

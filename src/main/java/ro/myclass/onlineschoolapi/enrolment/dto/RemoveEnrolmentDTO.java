@@ -1,18 +1,20 @@
-package ro.myclass.onlineschoolapi.course.dto;
-
+package ro.myclass.onlineschoolapi.enrolment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CourseDTO {
+public class RemoveEnrolmentDTO {
 
-    private String name;
-    private String department;
+    private String firstName;
+
+    private String lastName;
+
+    private String courseName;
+
 }
